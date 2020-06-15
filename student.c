@@ -15,7 +15,13 @@ void add_student_record();
 int search();
 void search_student_record();
 void display_data();
-struct ADDRESS#
+void delete_student_record();
+void modify_student_record();
+void list_records();
+void backup_database();
+void progress();
+void exit_system();
+struct ADDRESS
    {
     char STREET[25];
     char IM[25];
@@ -45,6 +51,7 @@ struct ADDRESS#
 void main()
 {
 	int gd=DETECT,gm;
+	
 	initgraph(&gd,&gm,"C:\\turboc3\\bgi");
 
       // 	login_window();
@@ -95,6 +102,8 @@ void login_window()
       ellipse(320, 200, 0, 360,8, 12);
       ellipse(320, 200, 0, 360,7, 11);
       floodfill(321,201,WHITE);
+
+
 
     /* draw 4th body */
 
@@ -308,7 +317,7 @@ delay(19);
     //ESCAPE LOOP
 
     if(ch==27)
-    exit();
+    exit_system();
 
     if(i>10)
     {
@@ -468,7 +477,7 @@ delay(19);
   get_mouse();
   if(o.x.bx==1&&o.x.cx<200&&o.x.cx>50&&o.x.dx<100&&o.x.dx>50)
     {
-      
+
       add_student_record();
       delay(500);
       secpage();
@@ -484,36 +493,36 @@ delay(19);
 
    if(o.x.bx==1&&o.x.cx<200&&o.x.cx>50&&o.x.dx<200&&o.x.dx>150)
     {
-      printf("Hello World i am delete function ");
+      delete_student_record();
       delay(500);
 	  secpage();
     }
 
    if(o.x.bx==1&&o.x.cx<576&&o.x.cx>426&&o.x.dx<200&&o.x.dx>150)
-    {
-      printf("Hello World i am modify function");
-      delay(500);
+   {
+      modify_student_record();
+	  delay(500);
 	  secpage();
     }
 
    if(o.x.bx==1&&o.x.cx<200&&o.x.cx>50&&o.x.dx<300&&o.x.dx>250)
     {
-      printf("Hello World i am list function");
-      delay(1000);
+      list_records();
+      delay(500);
       secpage();
 
     }
 
    if(o.x.bx==1&&o.x.cx<576&&o.x.cx>426&&o.x.dx<300&&o.x.dx>250)
     {
-      printf("Hello World i am backup function ");
+      backup_database();
       delay(500);
 	  secpage();
     }
 
    if(o.x.bx==1&&o.x.cx<388&&o.x.cx>238&&o.x.dx<400&&o.x.dx>350)
     {
-	   printf("Hello world I am exit function");
+	   exit_system();
 	   delay(500);
 	   secpage();
 
@@ -521,6 +530,30 @@ delay(19);
   }
 
 }
+void draw_screen()
+   {
+
+   setcolor(15);
+   line(0,30,640,30);
+   line(0,31,640,31);
+   line(0,32,640,32);
+   line(0,33,640,33);
+   line(0,34,640,34);
+   setfillstyle(1,3);
+   floodfill(0,0,15);
+
+  /* Bottom Horizontal line */
+
+    setcolor(15);
+    line(0,450,640,450);
+    line(0,451,640,451);
+    line(0,452,640,452);
+    line(0,453,640,453);
+    line(0,454,640,454);
+    setfillstyle(1,3);
+    floodfill(0,460,15);
+
+   }
 void initialize_mouse()
    {
 
@@ -544,26 +577,24 @@ void initialize_mouse()
     int86(0x33,&i,&o);
 
     }
-	void add_window()
+   void add_window()
   {
     setcolor(3);
     settextstyle(12,0,1);
     outtextxy(110,50,"|||** ENTER STUDENT DATABASE MANUALLY **|||");
 
-  
-
-    setcolor(3);  /* INTERNAL WINDOW */
+    setcolor(3);
     setfillstyle(1,8);
     rectangle(570,400,60,100);
     rectangle(571,401,59,99);
-    setcolor(3);    /* OUTER WINDOW  */
+    setcolor(3);
     rectangle(590,420,40,80);
     rectangle(591,421,39,79);
     floodfill(579,418,3);
 
    }
 
- void add_student_record()
+   void add_student_record()
    {
       char INPUT ;
       struct STUDENT S;
@@ -571,9 +602,9 @@ void initialize_mouse()
       FILE *fp;
       initgraph(&gd,&gm,"C:\\turboc3\\bgi");
       cleardevice();
-
+      draw_screen();
       add_window();
-      fp=fopen("SDATABASE.DAT","a");
+      fp=fopen("DATABASE.DAT","a");
       if(fp==NULL)
       {
       clrscr();
@@ -589,7 +620,7 @@ void initialize_mouse()
       int gd=DETECT,gm;
       initgraph(&gd,&gm,"C:\\turboc3\\bgi");
       cleardevice();
-
+      draw_screen();
       add_window();
       fflush(stdin);
       gotoxy(10,8);
@@ -649,6 +680,7 @@ void initialize_mouse()
     fwrite(&S,sizeof(S),1,fp);
     initgraph(&gd,&gm,"C:\\turboc3\\bgi");
     cleardevice();
+    draw_screen();
     gotoxy(20,14);
     setcolor(3);
     setfillstyle(1,8);
@@ -659,20 +691,30 @@ void initialize_mouse()
     fflush(stdin);
     INPUT=getch();
     }
-   fclose(fp);
+fclose(fp);
 
   }
-void search_student_record()
+  void search_student_record()
    {
 
     struct STUDENT S;
-    int gd=DETECT,gm,RNO,yn;
+    int gd=DETECT,gm,RNO;
     FILE *fp;
     initgraph(&gd,&gm,"C:\\turboc3\\bgi");
 
-    RNO=search();
+    cleardevice();
+    draw_screen();
 
-    fp=fopen("C:\\SDATABASE.DAT","rb+");
+    setcolor(3);
+    setfillstyle(1,8);
+    rectangle(460,249,140,180);
+    rectangle(450,240,148,189);
+    floodfill(451,241,3);
+    gotoxy(20,14);
+    printf("ENTER ROLL NO :");
+    scanf("%d",&RNO);
+
+    fp=fopen("DATABASE.DAT","rb+");
     if(fp==NULL)
     {
     cleardevice();
@@ -686,11 +728,11 @@ void search_student_record()
     {
     cleardevice();
     initgraph(&gd,&gm,"C:\\turboc3\\bgi");
-
+    draw_screen();
     display_data();
 
     gotoxy(10,8);
-    printf("NAME :: %S ",S.L_NAME);
+    printf("NAME :: %s ",S.L_NAME);
     gotoxy(28,8);
     printf("%s",S.F_NAME);
     gotoxy(10,10);
@@ -732,79 +774,344 @@ void search_student_record()
     settextstyle(12,0,1);
     outtextxy(145,50,"|||** DETAILS OF STUDENT **|||");
 
-  /* FOLLOWING COAD IS TO ADD RECORD/MODIFY */
-
-    setcolor(3);  /* INTERNAL WINDOW  */
-    setfillstyle(1,8);
+    setcolor(3);
+	setfillstyle(1,8);
     rectangle(570,400,60,100);
     rectangle(571,401,59,99);
-    setcolor(3);    /* OUTER WINDOW */
+    setcolor(3);
     rectangle(590,420,40,80);
     rectangle(591,421,39,79);
     floodfill(579,418,3);
     }
 
-int search()
-{
+void delete_student_record()
+   {
+    int RNO;
+    FILE *fp,*fp1;
+    struct STUDENT S;
+    int gd=DETECT,gm;
+    initgraph(&gd,&gm,"C:\\turboc3\\bgi");
+    cleardevice();
+    draw_screen();
 
-  show_mouse();
-  get_mouse();
 
-  int rno;
 
-  //HEADING
-  settextstyle(1,0,4);
-  outtextxy(200,30,"SEARCH RECORD");
+    setcolor(3);
+    setfillstyle(1,8);
+    rectangle(460,249,140,180);
+    rectangle(450,240,148,189);
+    floodfill(451,241,3);
+    gotoxy(20,14);
+    printf("ENTER ROLL NUMBER   :");
+    scanf("%d",&RNO);
 
-  //BLUE BOX
-  rectangle(50,70,600,420);
-  rectangle(51,71,599,419);
-  setfillstyle(1,3);
-  floodfill(52,72,WHITE);
 
-   //grey box
-  rectangle(80,100,570,390);
-  rectangle(81,101,569,389);
-  setfillstyle(1,8);
-  floodfill(82,102,WHITE);
+    fp=fopen("DATABASE.DAT","rb+");
+    fp1=fopen("TEMP.DAT","wb+");
 
-  //ID TO BE DELETED
-  settextstyle(8,0,2);
-  outtextxy(155,145,"ENTER THE ID TO BE SEARCHED:");
-  rectangle(225,195,425,245);
-  rectangle(226,196,424,244);
-  setfillstyle(1,BLACK);
-  floodfill(227,197,WHITE);
+    rewind(fp);
+    while(fread(&S,sizeof(S),1,fp)==1)
+    {
+    if(S.ROLL_NO==RNO)
+    {
+     fwrite(&S,sizeof(S),1,fp1);
+    }
+    }
+	fclose(fp);
+    fclose(fp1);
+    remove("DATABASE.DAT");
+    rename("TEMP.DAT","DATABASE.DAT");
 
-  //DELETE BOX
-  rectangle(145,265,245,305);
-  rectangle(144,264,246,306);
-  setfillstyle(1,RED);
-  floodfill(146,266,WHITE);
-  outtextxy(153,266,"SEARCH");
+	cleardevice();
+	setcolor(3);
+    setfillstyle(1,8);
+    rectangle(460,249,140,180);
+    rectangle(450,240,148,189);
+    floodfill(451,241,3);
+    gotoxy(30,14);
+    printf("RECORD DELETED");
+	getch();
+    }
 
-  //cancel box
-  rectangle(395,265,495,305);
-  rectangle(394,264,496,306);
-  setfillstyle(1,GREEN);
-  floodfill(396,266,WHITE);
-  outtextxy(403,266,"CANCEL");
+  void modify_student_record()
+   {
+    struct STUDENT S;
+    FILE *fp;
+    long int size=sizeof(S);
+    char NAME[15];
+    int gd=DETECT,gm;
+    initgraph(&gd,&gm,"C:\\turboc3\\bgi");
+    cleardevice();
+    draw_screen();
 
-  fflush(stdin);
-  gotoxy(20,14);
-  scanf("%d",&rno);
-  while(!kbhit())
+
+    setcolor(3);
+    setfillstyle(1,8);
+    rectangle(570,400,60,100);
+    rectangle(571,401,59,99);
+    setcolor(3);
+    rectangle(590,420,40,80);
+    rectangle(591,421,39,79);
+    floodfill(579,418,3);
+
+    // input box
+    setcolor(3);
+    setfillstyle(1,8);
+    rectangle(460,249,140,180);
+    rectangle(450,240,148,189);
+    floodfill(451,241,3);
+    gotoxy(20,14);
+   
+    printf("ENTER FIRST NAME :: ");
+    scanf("%s",NAME);
+    initgraph(&gd,&gm,"C:\\turboc3\\bgi");
+    cleardevice();
+    draw_screen();
+    add_window();
+	
+    fp=fopen("DATABASE.DAT","rb+");
+
+    rewind(fp);
+    while(fread(&S,sizeof(S),1,fp)==1)
+    {
+    if(strcmp(S.F_NAME,NAME)==0)
+   {
+    gotoxy(10,8);
+    printf(" ROLL NO : ");
+    scanf("%d",&S.ROLL_NO);
+    gotoxy(10,9);
+    printf(" FIRST NAME :: ");
+    scanf("%s",S.F_NAME);
+    gotoxy(10,10);
+    printf(" LAST NAME :: ");
+    scanf("%s",S.L_NAME);
+    gotoxy(10,11);
+    printf(" SEX MALE OR FEMALE :: ");
+    scanf("%s",S.SEX);
+    gotoxy(10,12);
+    printf(" COURSE NAME :: ");
+    scanf("%s",S.COURSE_NAME);
+    gotoxy(10,13);
+    printf(" ADMISSION DATE DD/MM/YY FORMAT :: ");
+    gotoxy(49,13);
+    scanf("%d",&S.DAY);
+    gotoxy(51,13);
+    printf("/");
+    gotoxy(53,13);
+    scanf("%d",&S.MONTH);
+    gotoxy(55,13);
+    printf("/");
+    gotoxy(56,13);
+    scanf("%d",&S.YEAR);
+    gotoxy(10,14);
+    printf("FEES STATUS PAID OR DUE :: ");
+    scanf("%s",S.FEES);
+    gotoxy(10,15);
+    printf(" MARKS OF STUDENT :: ");
+    scanf("%f",&S.MARKS);
+
+    gotoxy(10,16);
+    printf(" MOBILE NO. :: ");
+    scanf("%s",S.MOBILE_NO);
+    gotoxy(10,17);
+    printf(" ADDRESS[STREET] :: ");
+    scanf("%s",S.A.STREET);
+    gotoxy(10,18);
+    printf(" LAND MARK :: ");
+    scanf("%s",S.A.IM);
+    gotoxy(10,19);
+    printf(" CITY :: ");
+    scanf("%s",S.A.CITY);
+    gotoxy(10,20);
+    printf(" PIN :: ") ;
+
+    scanf("%s",S.A.PIN);
+    gotoxy(10,21);
+    printf(" COUNTRY :: ");
+    scanf("%s",S.A.COUNTRY);
+    fseek(fp,-size,SEEK_CUR);
+    fwrite(&S,size,1,fp);
+}  // if end
+      }  //while end
+    fclose(fp);
+
+    }
+
+void list_records()
+   {
+    struct STUDENT S;
+    FILE *fp;
+
+
+    int Y=6;
+    int gd=DETECT,gm;
+    initgraph(&gd,&gm,"C:\\turboc3\\bgi");
+    cleardevice();
+    draw_screen();
+
+
+    setcolor(3);
+    rectangle(610,448,21,40);
+    rectangle(611,449,20,39);
+
+  /* line to draw a horizontal above square. */
+
+    line(20,65,610,65);
+    line(21,66,611,66);
+
+ //roll no.
+    line(50,40,50,449);
+    gotoxy(4,4);
+    printf("NO.");
+
+//name
+    gotoxy(8,4);
+    printf("NAME OF STUDENT");
+    line(292,40,292,449);
+
+  //date
+    gotoxy(38,4);
+    printf("ADM. DATE");
+    line(380,40,380,449);
+
+//course
+    gotoxy(49,4);
+    printf("COURSE");
+    line(440,40,440,449);
+
+  //fees
+
+    gotoxy(57,4);
+    printf("FEES");
+    line(500,40,500,449);
+
+
+
+    gotoxy(65,4);
+    printf("MOBILE NO.");
+    fp=fopen("DATABASE.DAT","rb+");
+    rewind(fp);
+
+   while(fread(&S,sizeof(S),1,fp)==1)
+   {
+    gotoxy(4,Y);
+    printf("%d",S.ROLL_NO);
+    gotoxy(8,Y);
+    printf("%s",S.F_NAME);
+    gotoxy(19,Y);
+    printf("%s",S.L_NAME);
+    gotoxy(38,Y);
+    printf("%d/%d/%d",S.DAY,S.MONTH,S.YEAR);
+    gotoxy(50,Y);
+    printf("%s",S.COURSE_NAME);
+    gotoxy(58,Y);
+    printf("%s",S.FEES);
+    gotoxy(66,Y);
+    printf("%s",S.MOBILE_NO);
+    Y++;
+   }
+
+    delay(10000);
+    fclose(fp);
+
+   }
+
+   void backup_database()
+   {
+    struct STUDENT S;
+
+    FILE *fp,*backup;
+    fp=fopen("DATABASE.DAT","rb+");
+
+    if(fp==NULL)
+     {
+     cleardevice();
+     draw_screen();
+     gotoxy(25,10);
+    printf("FILE OPENING ERROR");
+    delay(2000);
+    exit(1);
+     }
+
+    backup=fopen("BACKUP.DAT","wb+");/* r+ because reads the existing content and write new contents */
+  if(backup==NULL)
+   {
+    cleardevice();
+    draw_screen();
+    gotoxy(25,10);
+    printf("FILE OPENING ERROR");
+    delay(2500);
+    exit(1);
+
+    }
+    progress();
+    rewind(fp);
+    while(fread(&S,sizeof(S),1,fp)==1)
+    fwrite(&S,sizeof(S),1,backup);
+    fclose(backup);
+    fclose(fp);
+
+    }
+
+  void progress()
   {
 
-    if(o.x.bx==1&&o.x.cx<245&&o.x.cx>145&&o.x.dx<305&&o.x.dx>265)
+    int gd=DETECT,gm,i;
+
+    initgraph(&gd,&gm,"C:\\turboc3\\bgi");
+
+    for( i=130;i<=495;i++)
     {
-      sleep(4);
-	  return rno;
-    }
-	if(o.x.bx==1&&o.x.cx<495&&o.x.cx>395&&o.x.dx<305&&o.x.dx>264)
-    {
-      sleep(3);
-	  return 0;
-    }
-  }
+      draw_screen();
+      setfillstyle(1,3);
+      bar(i,255,150,265);
+      sound(2*i);
+      delay(9);
+
+     }
+
+    nosound();
+    setcolor(15);
+    gotoxy(12,12);
+    outtextxy(200,240,"DATA BACKUP SUCCESSFULLY....");
+    delay(5000);
+
+     }
+
+	 void exit_system()
+{
+	int gdriver=DETECT,gmode;
+	initgraph(&gdriver,&gmode,"..\\BGI");
+	settextstyle(1,0,4);
+	outtextxy(280,30,"EXIT");
+
+	rectangle(50,70,600,420);
+	rectangle(51,71,599,419);
+	setfillstyle(1,3);
+		floodfill(52,72,WHITE);
+
+	 rectangle(80,100,570,390);
+	 rectangle(81,101,569,389);
+	setfillstyle(1,8);
+	floodfill(82,102,WHITE);
+	settextstyle(1,0,2);
+	outtextxy(150,165,"ARE YOU SURE YOU WANT TO EXIT");
+
+
+	  rectangle(145,265,245,305);
+	rectangle(144,264,246,306);
+	setfillstyle(1,RED);
+	floodfill(146,266,WHITE);
+	outtextxy(175,269,"EXIT");
+
+	  rectangle(395,265,495,305);
+	rectangle(394,264,496,306);
+	setfillstyle(1,GREEN);
+	floodfill(396,266,WHITE);
+	 outtextxy(407,270,"CANCEL");
+
+     getch();
+    return 0;
+
+
 }
