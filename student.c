@@ -51,11 +51,11 @@ struct ADDRESS
 void main()
 {
 	int gd=DETECT,gm;
-	
+
 	initgraph(&gd,&gm,"C:\\turboc3\\bgi");
 
-      // 	login_window();
-       //	password_input();
+	login_window();
+	password_input();
 
 	initialize_mouse();
 	secpage();
@@ -523,8 +523,8 @@ delay(19);
    if(o.x.bx==1&&o.x.cx<388&&o.x.cx>238&&o.x.dx<400&&o.x.dx>350)
     {
 	   exit_system();
-	   delay(500);
-	   secpage();
+	   delay(700);
+
 
     }
   }
@@ -861,14 +861,14 @@ void delete_student_record()
     rectangle(450,240,148,189);
     floodfill(451,241,3);
     gotoxy(20,14);
-   
+
     printf("ENTER FIRST NAME :: ");
     scanf("%s",NAME);
     initgraph(&gd,&gm,"C:\\turboc3\\bgi");
     cleardevice();
     draw_screen();
     add_window();
-	
+
     fp=fopen("DATABASE.DAT","rb+");
 
     rewind(fp);
@@ -1082,36 +1082,21 @@ void list_records()
 {
 	int gdriver=DETECT,gmode;
 	initgraph(&gdriver,&gmode,"..\\BGI");
-	settextstyle(1,0,4);
-	outtextxy(280,30,"EXIT");
+	 cleardevice();
+    draw_screen();
 
-	rectangle(50,70,600,420);
-	rectangle(51,71,599,419);
-	setfillstyle(1,3);
-		floodfill(52,72,WHITE);
+    // input box
+    setcolor(3);
+    setfillstyle(1,8);
+    rectangle(460,249,140,180);
+    rectangle(450,240,148,189);
+    floodfill(451,241,3);
+    gotoxy(30,14);
 
-	 rectangle(80,100,570,390);
-	 rectangle(81,101,569,389);
-	setfillstyle(1,8);
-	floodfill(82,102,WHITE);
-	settextstyle(1,0,2);
-	outtextxy(150,165,"ARE YOU SURE YOU WANT TO EXIT");
-
-
-	  rectangle(145,265,245,305);
-	rectangle(144,264,246,306);
-	setfillstyle(1,RED);
-	floodfill(146,266,WHITE);
-	outtextxy(175,269,"EXIT");
-
-	  rectangle(395,265,495,305);
-	rectangle(394,264,496,306);
-	setfillstyle(1,GREEN);
-	floodfill(396,266,WHITE);
-	 outtextxy(407,270,"CANCEL");
-
-     getch();
-    return 0;
+    printf("  THANK YOU");
+    sleep(2);
+    getch();
+    exit();
 
 
 }
