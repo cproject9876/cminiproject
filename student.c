@@ -145,7 +145,7 @@ void login_window()
     floodfill(343,153,WHITE);
 
     gotoxy(23,16);
-    printf("STUDENT DATABASE MANAGEMENT SYSTEM !");
+    printf("   STUDENT DATA MANAGEMENT SYSTEM !");
 
     /* following coad is to draw the circle Enter Button */
 
@@ -196,7 +196,7 @@ void login_window()
   {
   int X=206,Y=262;
   char password[10];
-  char pass[12]="minions";
+  char pass[12]="cpsgpro";
   int i;
   char ch;
   for(i=0;i<12;i++)
