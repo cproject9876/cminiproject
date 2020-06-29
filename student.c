@@ -812,7 +812,7 @@ void delete_student_record()
     rewind(fp);
     while(fread(&S,sizeof(S),1,fp)==1)
     {
-    if(S.ROLL_NO==RNO)
+    if(S.ROLL_NO!=RNO)
     {
      fwrite(&S,sizeof(S),1,fp1);
     }
